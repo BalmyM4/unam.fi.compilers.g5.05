@@ -1,6 +1,10 @@
 import tkinter as tk
 from tkinter import filedialog, scrolledtext
+from tkinter import ttk
 
+# ------------------------------------------------------------------------- #
+# ---------------------------- Utility functions -------------------------- #
+# ------------------------------------------------------------------------- #
 
 
 # Open a file and display its content in the text area.
@@ -94,15 +98,66 @@ root.title("Lexical Analyzer")
 # Set the window size
 root.geometry("700x900")
 
-# Set the icon
-root.iconbitmap("img/icon.ico")
 
+# Set the background color
+root.config(bg="#24292e")
+
+
+# ------------------------------------------------------------------------- #
+# ---------------------------------- Head --------------------------------- #
+# ------------------------------------------------------------------------- #
+
+# Crear un frame pequeño para decoración
+#decorative_frame1 = tk.Frame(root, height=5, bg="#36a3f7")
+#decorative_frame1.pack(fill="x", pady=5)
+
+
+# Función para mover la ventana
+def move_window(event):
+    # Obtener la nueva posición de la ventana
+    root.geometry(f'+{event.x_root}+{event.y_root}')
+
+
+# Eliminar la barra de título predeterminada
+root.overrideredirect(True)
+
+
+# Crear un frame para la barra de título personalizada
+title_bar = tk.Frame(root, bg="#1d2125", relief="raised", bd=0, height=30)
+title_bar.pack(fill="x", side="top")
+
+
+# Agregar un título al frame de la barra
+title_label = tk.Label(title_bar, text="Lexical Analyzer", fg="white", bg="#1d2125", font=("Haettenschweiler", 18))
+title_label.pack(side="left", padx=10)
+
+
+# Cargar la imagen para el botón de cerrar
+close_image = tk.PhotoImage(file="resources/img/close.png")  # Cambia el camino de la imagen
+
+# Crear un botón para cerrar la ventana
+close_button = tk.Button(title_bar, image=close_image, bg="#1d2125", bd=0, command=root.quit)
+close_button.pack(side="right", padx=10)
+close_button.config(activebackground="#1d2125", activeforeground="white")
+
+
+# Hacer que la barra de título se pueda arrastrar
+title_bar.bind("<B1-Motion>", move_window)  # Detecta el movimiento con el botón izquierdo del ratón
+
+
+
+# Crear un frame pequeño para decoración
+decorative_frame2 = tk.Frame(root, height=5, bg="#814f05")
+decorative_frame2.pack(fill="x", pady=5)
+
+# ------------------------------------------------------------------------- #
+# ---------------------------------- Body --------------------------------- #
+# ------------------------------------------------------------------------- #
 
 # Main frame
 frame = tk.Frame(root, padx=10, pady=10)
 frame.pack(expand=True, fill="both")
-
-
+frame.config(bg="#24292e")
 
 # ------------------------------------------------------------------------- #
 # ------------------------------- Text area ------------------------------- #
@@ -110,18 +165,27 @@ frame.pack(expand=True, fill="both")
 
 
 # Text area with scroll
-text_area = scrolledtext.ScrolledText(frame, width=50, height=10)
+text_area = scrolledtext.ScrolledText(frame, width=50, height=10, font=("Consolas", 14))
 text_area.pack(pady=5, fill="both", expand=True)
+text_area.config(bg="#444d56", fg="#ffffff")
 
 
+#6e87a6
 # Button to select file
 btn_open = tk.Button(frame, text="Open file", command=open_file)
 btn_open.pack(pady=5, fill="x")
+btn_open.config( font=("Arial Rounded MT Bold", 14, "bold"), 
+                 relief="flat", 
+                 bg="#0366d6", 
+                 fg="#ffffff", 
+                 activebackground="#24292e", 
+                 activeforeground="#ffffff")
 
 
 # Create a frame to hold the 'Analyze' and 'Clear' buttons
 buttons_text_area_frame = tk.Frame(frame)
 buttons_text_area_frame.pack(pady=5, fill="x")
+buttons_text_area_frame.config(bg="#24292e")
 
 
 # Configure the grid columns to expand
@@ -132,12 +196,23 @@ buttons_text_area_frame.grid_columnconfigure(1, weight=1)
 # Button to analyze
 btn_analyze = tk.Button(buttons_text_area_frame, text="Analyze", command=analyze_text)
 btn_analyze.grid(row=0, column=0, pady=5, sticky="ew", padx=5)
+btn_analyze.config( font=("Arial Rounded MT Bold", 14, "bold"), 
+                 relief="flat", 
+                 bg="#23764f", 
+                 fg="#ffffff", 
+                 activebackground="#24292e", 
+                 activeforeground="#ffffff")
 
 
 # Button to clear the content
 btn_clear_text = tk.Button(buttons_text_area_frame, text="Clear", command=clear_text_area)
 btn_clear_text.grid(row=0, column=1, pady=5, sticky="ew", padx=5)
-
+btn_clear_text.config( font=("Arial Rounded MT Bold", 14, "bold"), 
+                 relief="flat", 
+                 bg="#762344", 
+                 fg="#ffffff", 
+                 activebackground="#24292e", 
+                 activeforeground="#ffffff")
 
 
 # ------------------------------------------------------------------------- #
@@ -146,13 +221,14 @@ btn_clear_text.grid(row=0, column=1, pady=5, sticky="ew", padx=5)
 
 
 # Scrollable text area
-result_area = scrolledtext.ScrolledText(frame, width=50, height=10)
+result_area = scrolledtext.ScrolledText(frame, width=50, height=10, font=("Consolas", 14))
 result_area.pack(pady=5, fill="both", expand=True)
-
+result_area.config(bg="#444d56", fg="#ffffff")
 
 # Create a frame to hold the 'Save file' and 'Clear' buttons
 buttons_result_area_frame = tk.Frame(frame)
 buttons_result_area_frame.pack(pady=5, fill="x")
+buttons_result_area_frame.config(bg="#24292e")
 
 
 # Configure the grid columns to expand
@@ -163,11 +239,23 @@ buttons_result_area_frame.grid_columnconfigure(1, weight=1)
 # Button to save file
 btn_save = tk.Button(buttons_result_area_frame, text="Save file", command=save_file)
 btn_save.grid(row=0, column=0, pady=5, sticky="ew", padx=5)
+btn_save.config( font=("Arial Rounded MT Bold", 14, "bold"), 
+                 relief="flat", 
+                 bg="#0366d6", 
+                 fg="#ffffff", 
+                 activebackground="#24292e", 
+                 activeforeground="#ffffff")
 
 
 # Button to clear content
 btn_clear_result = tk.Button(buttons_result_area_frame, text="Clear", command=clear_result_area)
 btn_clear_result.grid(row=0, column=1, pady=5, sticky="ew", padx=5)
+btn_clear_result.config( font=("Arial Rounded MT Bold", 14, "bold"), 
+                 relief="flat", 
+                 bg="#762344", 
+                 fg="#ffffff", 
+                 activebackground="#24292e", 
+                 activeforeground="#ffffff")
 
 
 
