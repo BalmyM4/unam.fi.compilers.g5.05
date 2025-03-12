@@ -107,57 +107,63 @@ root.config(bg="#24292e")
 # ---------------------------------- Head --------------------------------- #
 # ------------------------------------------------------------------------- #
 
-# Crear un frame pequeño para decoración
+# Create a small frame for decoration
 #decorative_frame1 = tk.Frame(root, height=5, bg="#36a3f7")
 #decorative_frame1.pack(fill="x", pady=5)
 
 
-# Función para mover la ventana
+# Function to move the window
 def move_window(event):
-    # Obtener la nueva posición de la ventana
+    # Get the new window position
     root.geometry(f'+{event.x_root}+{event.y_root}')
 
 
-# Eliminar la barra de título predeterminada
+# Remove the default title bar
 root.overrideredirect(True)
 
 
-# Crear un frame para la barra de título personalizada
+# Create a frame for the custom title bar
 title_bar = tk.Frame(root, bg="#1d2125", relief="raised", bd=0, height=30)
 title_bar.pack(fill="x", side="top")
 
 
-# Agregar un título al frame de la barra
+# Add a title to the title bar frame
 title_label = tk.Label(title_bar, text="Lexical Analyzer", fg="white", bg="#1d2125", font=("Haettenschweiler", 18))
 title_label.pack(side="left", padx=10)
 
 
-# Cargar la imagen para el botón de cerrar
-close_image = tk.PhotoImage(file="resources/img/close.png")  # Cambia el camino de la imagen
+# Load the image for the close button
+close_image = tk.PhotoImage(file="resources/img/close.png")
 
-# Crear un botón para cerrar la ventana
+# Create a button to close the window
 close_button = tk.Button(title_bar, image=close_image, bg="#1d2125", bd=0, command=root.quit)
 close_button.pack(side="right", padx=10)
 close_button.config(activebackground="#1d2125", activeforeground="white")
 
 
-# Hacer que la barra de título se pueda arrastrar
-title_bar.bind("<B1-Motion>", move_window)  # Detecta el movimiento con el botón izquierdo del ratón
+# Make the title bar draggable
+title_bar.bind("<B1-Motion>", move_window) # Detect movement with the left mouse button
 
 
 
-# Crear un frame pequeño para decoración
+
+# Create a small frame for decoration
 decorative_frame2 = tk.Frame(root, height=5, bg="#814f05")
 decorative_frame2.pack(fill="x", pady=5)
+
+
 
 # ------------------------------------------------------------------------- #
 # ---------------------------------- Body --------------------------------- #
 # ------------------------------------------------------------------------- #
 
+
 # Main frame
 frame = tk.Frame(root, padx=10, pady=10)
 frame.pack(expand=True, fill="both")
 frame.config(bg="#24292e")
+
+
 
 # ------------------------------------------------------------------------- #
 # ------------------------------- Text area ------------------------------- #
@@ -170,7 +176,6 @@ text_area.pack(pady=5, fill="both", expand=True)
 text_area.config(bg="#444d56", fg="#ffffff")
 
 
-#6e87a6
 # Button to select file
 btn_open = tk.Button(frame, text="Open file", command=open_file)
 btn_open.pack(pady=5, fill="x")
@@ -225,6 +230,7 @@ result_area = scrolledtext.ScrolledText(frame, width=50, height=10, font=("Conso
 result_area.pack(pady=5, fill="both", expand=True)
 result_area.config(bg="#444d56", fg="#ffffff")
 
+
 # Create a frame to hold the 'Save file' and 'Clear' buttons
 buttons_result_area_frame = tk.Frame(frame)
 buttons_result_area_frame.pack(pady=5, fill="x")
@@ -264,5 +270,4 @@ btn_clear_result.config( font=("Arial Rounded MT Bold", 14, "bold"),
 # ------------------------------------------------------------------------- #
 
 
-# Ejecutar la ventana
 root.mainloop()
