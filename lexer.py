@@ -37,7 +37,7 @@ def t_LITERAL(t):
 
 # function for handling errors, if lexem can not be matched prints error message
 def t_error(t):
-  print("Illegal character '%s'" % t.value[0])
+  #print("Illegal character '%s'" % t.value[0])
   # skips the lexem
   t.lexer.skip(1)
   return (t.value[0], t.lineno, t.lexpos)
@@ -46,6 +46,10 @@ def t_error(t):
 t_ignore  = ' \t\n'
 t_ignore_comment = r"\/\/ | \/*^[*]\*//"
 
+
+# ------------------------------------------------------------------------- #
+# --------------------------------- Lexer --------------------------------- #
+# ------------------------------------------------------------------------- #
 
 # Transform the list of tokens into a string
 def token_list_to_string( list_tokens ):
@@ -92,6 +96,11 @@ def Lexer_analyzer( input_data ):
     string_errors = error_list_to_string(list_errors)
 
     return string_tokens + string_errors
+
+
+# ------------------------------------------------------------------------- #
+# ---------------------------------- Test --------------------------------- #
+# ------------------------------------------------------------------------- #
 
 
 if __name__ == "__main__":
