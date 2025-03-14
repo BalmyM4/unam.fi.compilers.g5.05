@@ -60,6 +60,7 @@ A → αβ1|αβ2
 Deferring the decision by expanding A to A’ allows us to see the input derived from α, and expanding A’ to β1 or β2. The original production becomes.
 
 A → αA’
+
 A’→ β1| β2
 
 ---
