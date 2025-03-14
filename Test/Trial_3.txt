@@ -1,0 +1,10 @@
+#include <stdio.h>
+
+int main() {
+
+    int ñ = 5; 
+
+    printf("Value of ñ: %d\n", ñ);
+
+    return 0;
+}
