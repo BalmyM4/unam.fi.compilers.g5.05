@@ -40,31 +40,81 @@ def t_error(t):
   print("Illegal character '%s'" % t.value[0])
   # skips the lexem
   t.lexer.skip(1)
-  return t.value[0]
+  return (t.value[0], t.lineno, t.lexpos)
 
 
 t_ignore  = ' \t\n'
 t_ignore_comment = r"\/\/ | \/*^[*]\*//"
 
-lexer = lex.lex()
 
-with open('input.txt', 'r') as file:
-  data = file.read()
+# Transform the list of tokens into a string
+def token_list_to_string( list_tokens ):
+    
+    str_tokens = f"The total number of tokens is: {len(list_tokens)}\n" + "Type\t\tValue\t\tLine\t\tPosition\n"
+
+    for tok in list_tokens:
+        str_tokens += f"{tok.type}\t\t{tok.value}\t\t{tok.lineno}\t\t{tok.lexpos}\n"
+    
+    return str_tokens
+
+# Transform the error list into a string
+def error_list_to_string( list_errors ):
+   
+    str_errors = "\n"
+
+    for error in list_errors:
+        str_errors += f"ERROR\t\t{error[0]}\t\t{error[1]}\t\t{error[2]}\n"
+
+    return str_errors
+
+# Function to analyze the input data
+def Lexer_analyzer( input_data ):
+    
+    # Initialize the lexer
+    lexer = lex.lex()
+
+    # Pass the input data to the lexer
+    lexer.input(input_data)
+
+    # Tokenize
+    list_tokens = []
+    list_errors = []
+    while True:
+        tok = lexer.token()
+        if type(tok) == tuple:
+            list_errors.append(tok)
+            continue
+        if not tok: 
+            break
+        list_tokens.append(tok)
+    
+    string_tokens = token_list_to_string(list_tokens)
+    string_errors = error_list_to_string(list_errors)
+
+    return string_tokens + string_errors
 
 
-"""
-lexer.input(data)
+if __name__ == "__main__":
+    
+    lexer = lex.lex()
 
-# Tokenize
-tokens = []
-while True:
-    tok = lexer.token()
-    cur_index += 1
-    if not tok: 
-        break      # No more input
-    tokens.append(tok)
+    with open('input.txt', 'r') as file:
+      data = file.read()
 
-print(f"Total number of tokens {len(tokens)}")
-for tok in tokens: 
-  print(tok)"
-"""
+    lexer.input(data)
+
+    # Tokenize
+    tokens = []
+    while True:
+        tok = lexer.token()
+        if not tok: 
+            break
+        tokens.append(tok)
+
+    print(f"The total number of tokens is: {len(tokens)}")
+    print("Type\t\tValue\t\tLine\t\tPosition")
+    for tok in tokens: 
+      print(f"{tok.type}\t\t{tok.value}\t\t{tok.lineno}\t\t{tok.lexpos}\n")
+
+
+

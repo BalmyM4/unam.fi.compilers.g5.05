@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog, scrolledtext
 from tkinter import ttk
-from lexer import lexer
+import lexer as lex
 
 # ------------------------------------------------------------------------- #
 # ---------------------------- Utility functions -------------------------- #
@@ -50,56 +50,7 @@ def analyze_text():
         pass
     else:
         # Analyze the text
-        lexer.input(input_data)
-
-        # Tokenize
-        tokens = []
-        errors = []
-        error_indices = []
-        token_indices = []
-        ind = -1
-        while True:
-            ind += 1
-            tok = lexer.token()
-            # If lexer can not identify token append index to error index list
-            if type(tok) == str:
-                errors.append(tok)
-                error_indices.append(ind)
-                continue
-            if not tok: 
-                break      # No more input
-            # add index to token index list
-            token_indices.append(ind)
-            tokens.append(tok)
-
-
-        # list to add tokens and errors
-        token_classification = []
-        #index to keep track of which element the cycle is in
-        cur_ind = 1
-        # indexes of both lists
-        ind_errors = 0
-        ind_tokens = 0
-        # adding big number  at the end of the lists so it is not necessary to check if we have checked all list elements
-        token_indices.append(1e18)
-        error_indices.append(1e18)
-        # following merge sort idea to add either the errors that appeard or the tokens themselves
-        for i in range (ind):
-            # adding the next token that has not been identified yet
-            if token_indices[ind_tokens] < error_indices[ind_errors]:
-                token = tokens[ind_tokens]
-                token_classification.append(f"{cur_ind}.  {token.value} -> {token.type} \n")
-                # advancing to next token
-                ind_tokens += 1
-                cur_ind += 1
-            else:
-                token_classification.append(f"Illegal character -> {errors[ind_errors]}  \n")
-                # advancing to next error
-                ind_errors += 1
-                
-
-        result = f"Total number of tokens {len(tokens)}\n" + ("".join(token_classification))
-        
+        result = lex.Lexer_analyzer(input_data)
 
         # Display the result
         result_area.insert(tk.END, result)
